@@ -38,9 +38,9 @@ wheels/
 data/raw/*.xlsx
 data/processed/*.csv
 
-# Results (可选)
-results/figures/*.png
-results/tables/*.csv
+# Results (保留关键结果文件)
+# results/figures/*.png
+# results/tables/*.csv
 
 # Logs
 *.log
