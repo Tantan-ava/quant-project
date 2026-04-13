@@ -1,0 +1,18 @@
+{
+  "best_params": {
+    "ep_weight": 0.3,
+    "top_k": 150
+  },
+  "train_performance": {
+    "sharpe_ratio": 0.4596234258493154,
+    "annual_return": 0.18495821058419137
+  },
+  "test_performance": {
+    "annual_return": 0.47690428944113017,
+    "sharpe_ratio": 1.5223440488211866,
+    "max_drawdown": -0.16835917556518498
+  },
+  "sharpe_decay": 1.062720622971871,
+  "return_decay": 0.2919460788569388,
+  "overfitting_risk": "\u4f4e"
+}
