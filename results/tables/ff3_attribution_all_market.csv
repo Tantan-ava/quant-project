@@ -1,0 +1,2 @@
+alpha_monthly,alpha_annual,alpha_t,alpha_p,mkt_beta,smb_beta,hml_beta,r_squared,adj_r_squared,factor_source,universe
+0.006206811663511229,0.07448173996213475,2.4467271164433804,0.01441599394174678,1.0211703043905518,0.7788168902219464,-0.6453129189175402,0.87208271864733,0.8704497320768704,"ff3_regression_data.csv (标准FF3, HML基于BP)",全市场股票池
