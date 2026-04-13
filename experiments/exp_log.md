@@ -2762,38 +2762,42 @@ python src/analysis/ch3_attribution_value_optimized.py
 
 **表现突出年份**: 2007(+112.49%)、2009(+97.80%)、2015(+63.69%)
 
-### 7.18.3 FF3因子归因分析
+### 7.18.3 标准FF3因子归因分析
 
 **回归模型**: $R_p - R_f = \alpha + \beta_{MKT} \cdot MKT + \beta_{SMB} \cdot SMB + \beta_{HML} \cdot HML + \epsilon$
+
+**因子数据来源**: `results/tables/ff3_regression_data.csv`（标准FF3因子，HML基于账面市值比BP构建）
 
 #### 回归系数
 
 | 指标 | 系数 | 标准误 | t统计量 | p值 | 显著性 |
 |------|------|--------|---------|-----|--------|
-| **Alpha** | **0.73%/月** | 0.0022 | **3.325** | 0.0009 | **高度显著*** |
-| MKT Beta | 0.631 | 0.029 | 21.411 | 0.0000 | 高度显著*** |
-| SMB Beta | 0.530 | 0.053 | 9.925 | 0.0000 | 高度显著*** |
-| HML Beta | -0.111 | 0.061 | -1.814 | 0.0698 | 边际显著* |
+| **Alpha** | **0.78%/月** | 0.0021 | **3.660** | 0.0003 | **高度显著*** |
+| MKT Beta | 0.625 | 0.032 | 19.261 | 0.0000 | 高度显著*** |
+| SMB Beta | 0.466 | 0.050 | 9.262 | 0.0000 | 高度显著*** |
+| HML Beta | -0.152 | 0.072 | -2.129 | 0.0332 | 显著** |
 
 #### 模型拟合
 
 | 指标 | 数值 |
 |------|------|
-| R² | 75.22% |
-| 调整后R² | 74.91% |
-| F统计量 | 214.00 (p<0.0001) |
+| R² | 74.50% |
+| 调整后R² | 74.18% |
+| F统计量 | 212.60 (p<0.0001) |
 
 #### 因子暴露解读
 
-1. **高市场暴露** (MKT Beta=0.63): 策略与市场高度相关
-2. **小盘倾向** (SMB Beta=0.53): 策略偏好小市值股票
-3. **轻微成长倾向** (HML Beta=-0.11): 负值表示轻微成长股倾向
+1. **高市场暴露** (MKT Beta=0.625): 策略与市场高度相关
+2. **小盘倾向** (SMB Beta=0.466): 策略偏好小市值股票
+3. **成长倾向** (HML Beta=-0.152): 负值表示成长股倾向，符合反转策略特征（前期跌幅大的往往是成长股）
+
+**与CH3归因对比**: 标准FF3的HML Beta(-0.152)比CH3的VMG Beta(-0.111)更显著，表明基于BP的价值因子对策略的解释力更强。
 
 ### 7.18.4 CH3因子归因分析
 
 **回归模型**: $R_p - R_f = \alpha + \beta_{MKT} \cdot MKT + \beta_{SMB} \cdot SMB + \beta_{VMG} \cdot VMG + \epsilon$
 
-(CH3与FF3因子数据相同，VMG即HML价值因子)
+**因子数据来源**: `data/processed/CH3_factors_monthly_202602.xlsx`（Liu et al. 2019中国三因子，VMG基于盈利收益率EP构建）
 
 #### 回归系数
 
@@ -2804,17 +2808,40 @@ python src/analysis/ch3_attribution_value_optimized.py
 | SMB Beta | 0.530 | 0.053 | 9.925 | 0.0000 | 高度显著*** |
 | VMG Beta | -0.111 | 0.061 | -1.814 | 0.0698 | 边际显著* |
 
+#### 模型拟合
+
+| 指标 | 数值 |
+|------|------|
+| R² | 75.22% |
+| 调整后R² | 74.91% |
+| F统计量 | 214.00 (p<0.0001) |
+
+#### FF3 vs CH3 对比分析
+
+| 指标 | 标准FF3 (HML基于BP) | CH3 (VMG基于EP) | 差异 |
+|------|---------------------|-----------------|------|
+| Alpha | 0.78%/月 (t=3.66) | 0.73%/月 (t=3.33) | FF3略高 |
+| MKT Beta | 0.625 | 0.631 | 基本一致 |
+| SMB Beta | 0.466 | 0.530 | CH3略高 |
+| 价值因子 | -0.152 (HML) | -0.111 (VMG) | FF3更显著 |
+| R² | 74.50% | 75.22% | CH3略高 |
+
+**关键发现**:
+- 两个模型的Alpha均高度显著，表明策略具有真实的超额收益能力
+- 标准FF3的HML因子（基于BP）比CH3的VMG因子（基于EP）对策略的解释力更强
+- 这与策略配置一致：组合策略使用EP作为价值因子，但反转效应与BP-based价值因子的负相关性更强
+
 ### 7.18.5 策略对比分析
 
-#### 与纯价值策略对比
+#### 与纯价值策略对比（标准FF3归因）
 
 | 指标 | 纯价值策略(EP80%) | 月度组合策略 | 变化 |
 |------|-------------------|--------------|------|
 | 年化收益率 | 10.81% | **20.39%** | +9.58% |
 | 夏普比率 | 0.431 | **0.885** | +0.454 |
-| 月度Alpha | 0.70% | **0.73%** | +0.03% |
+| 月度Alpha | 0.70% | **0.78%** | +0.08% |
 | Alpha显著性 | 显著** | **高度显著*** | 提升 |
-| R² | 2.66% | **75.22%** | +72.56% |
+| R² | 2.66% | **74.50%** | +71.84% |
 | 市场Beta | 0.08 | **0.63** | +0.55 |
 
 #### 与纯反转策略对比
@@ -2831,9 +2858,10 @@ python src/analysis/ch3_attribution_value_optimized.py
    - 组合策略年化收益20.39%，远超纯价值策略(10.81%)
    - 夏普比率0.885，风险调整后收益优秀
 
-2. **Alpha高度显著**:
-   - 月度Alpha=0.73%，t=3.33，高度显著
+2. **Alpha高度显著**（标准FF3归因）:
+   - 月度Alpha=0.78%，t=3.66，高度显著
    - 相比纯价值策略，Alpha显著性进一步提升
+   - HML Beta=-0.152，显著为负，表明策略具有成长股倾向（符合反转策略特征）
 
 3. **高因子暴露**:
    - R²=75.22%，表明75%的收益可被三因子解释
@@ -2846,13 +2874,13 @@ python src/analysis/ch3_attribution_value_optimized.py
 
 ### 7.18.7 可复述结论
 
-> 我们的月度组合策略(价值40%+反转60%)在2005-2025年期间：年化收益率20.39%，夏普比率0.885，最大回撤-47.85%。FF3/CH3归因显示：月度Alpha=0.73%（t=3.33，高度显著***），市场Beta=0.63，SMB Beta=0.53，HML Beta=-0.11。R²=75.22%，表明75%的收益可被风格因子解释。**组合策略具有高度显著的增量alpha能力，且收益风险比显著优于单一策略。**
+> 我们的月度组合策略(价值40%+反转60%)在2005-2025年期间：年化收益率20.39%，夏普比率0.885，最大回撤-47.85%。**标准FF3归因（HML基于BP）**：月度Alpha=0.78%（t=3.66，高度显著***），市场Beta=0.63，SMB Beta=0.47，HML Beta=-0.15（显著**）。R²=74.50%，表明74.5%的收益可被风格因子解释。**CH3归因（VMG基于EP）**：月度Alpha=0.73%（t=3.33，高度显著***），市场Beta=0.63，SMB Beta=0.53，VMG Beta=-0.11（边际显著*）。R²=75.22%。**组合策略具有高度显著的增量alpha能力，且收益风险比显著优于单一策略。标准FF3的HML因子对策略解释力更强（Beta更显著）。**
 
 ### 7.18.8 输出文件
 
 - `results/tables/monthly_combo_returns.csv`: 组合策略收益序列
-- `results/tables/ff3_attribution_monthly_combo.csv`: FF3归因结果
-- `results/tables/ch3_attribution_monthly_combo.csv`: CH3归因结果
+- `results/tables/ff3_attribution_monthly_combo_correct.csv`: 标准FF3归因结果（HML基于BP）
+- `results/tables/ch3_attribution_monthly_combo.csv`: CH3归因结果（VMG基于EP）
 - `src/backtest/monthly_combo_backtest.py`: 月度组合回测引擎
 - `run_monthly_combo_analysis.py`: 组合分析主脚本
 
@@ -2862,10 +2890,10 @@ python src/analysis/ch3_attribution_value_optimized.py
 # 运行月度组合策略分析
 python run_monthly_combo_analysis.py
 
-# FF3因子归因
-python src/analysis/ff3_attribution_monthly_combo.py
+# 标准FF3因子归因（HML基于账面市值比BP）
+python src/analysis/ff3_attribution_monthly_combo_correct.py
 
-# CH3因子归因
+# CH3因子归因（VMG基于盈利收益率EP）
 python src/analysis/ch3_attribution_monthly_combo.py
 
 # 月度回测引擎
