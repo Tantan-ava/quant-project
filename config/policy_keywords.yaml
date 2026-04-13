@@ -1,0 +1,95 @@
+# Truth Social情绪采集配置
+# 政策关键词与RSS源配置
+
+vader_lexicon:
+  # 贸易相关
+  tariff: -2.5
+  tariffs: -2.5
+  'trade war': -3.0
+  'trade wars': -3.0
+  sanctions: -2.0
+  sanction: -2.0
+  embargo: -2.5
+  
+  # 积极信号
+  deal: 2.5
+  agreement: 2.0
+  'chicken out': 1.5
+  postpone: 1.0
+  delay: 0.8
+  pause: 0.5
+  
+  # 升级/冲突
+  escalate: -2.0
+  escalation: -2.0
+  retaliate: -2.5
+  retaliation: -2.5
+  confrontation: -2.0
+  
+  # 市场相关
+  win: 2.0
+  winning: 2.5
+  lose: -2.0
+  losing: -2.5
+  disaster: -3.0
+  catastrophe: -3.5
+  
+  # 中国相关
+  china: -0.5
+  chinese: -0.5
+  beijing: -0.5
+  
+  # 其他地缘政治
+  iran: -1.0
+  russia: -1.0
+  'north korea': -1.5
+
+rss_sources:
+  - https://truthsocial.com/@realDonaldTrump/rss
+  - https://truthsocial.com/@TeamTrump/rss
+
+filters:
+  min_favourites: 10
+  keywords_required: 
+    - tariff
+    - trade
+    - war
+    - china
+    - iran
+    - sanction
+    - deal
+    - agreement
+    - escalate
+    - retaliate
+  date_range: '2022-02-01_to_now'
+  
+# 情绪指数计算参数
+sentiment_params:
+  # 点赞数加权参数
+  favourite_weight_factor: 0.1
+  max_favourite_weight: 5.0
+  
+  # 时间衰减参数 (半衰期天数)
+  time_decay_half_life: 7
+  
+  # VADER阈值
+  vader_positive_threshold: 0.05
+  vader_negative_threshold: -0.05
+  
+# 输出配置
+output:
+  daily_index_columns:
+    - date
+    - sentiment_score
+    - post_count
+    - avg_favourites
+    - vix_proxy
+    - shock_signal
+  
+  # 冲击信号阈值
+  shock_thresholds:
+    severe_negative: -0.5
+    moderate_negative: -0.3
+    neutral: 0.0
+    moderate_positive: 0.3
+    severe_positive: 0.5

@@ -1,0 +1,29 @@
+# News extraction
+feedparser>=6.0.10
+requests>=2.31.0
+
+# Sentiment analysis (VADER - fast, no GPU)
+vaderSentiment>=3.3.2
+
+# Data handling
+pandas>=2.0.0
+numpy>=1.24.0
+python-dateutil>=2.8.0
+python-dotenv>=1.0.0
+yfinance>=0.2.0
+
+# API
+flask>=3.0.0
+flask-cors>=4.0.0
+gunicorn>=21.0.0
+
+# Scheduled pipeline (daily auto-run)
+apscheduler>=3.10.0
+filelock>=3.12.0
+
+# YAML config
+pyyaml>=6.0
+
+# Optional: FinBERT for financial-specific sentiment (uncomment if needed)
+# transformers>=4.35.0
+# torch>=2.0.0

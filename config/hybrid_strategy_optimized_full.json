@@ -1,0 +1,39 @@
+{
+  "strategy": {
+    "name": "Hybrid_EP_Reversal_Sentiment",
+    "description": "EP价值 + K=6反转 + 情绪调仓（全数据优化）"
+  },
+  "optimized_params": {
+    "ep_weight": 0.4,
+    "reversal_weight": 0.6,
+    "osa_threshold_extreme": -2.5,
+    "osa_threshold_panic": -1.5,
+    "osa_threshold_greed": 1.5,
+    "scalar_extreme": 1.5,
+    "scalar_greed": 0.5,
+    "top_k": 50
+  },
+  "performance": {
+    "cv_sharpe": 0.5123848383201053,
+    "rolling_cv": 3.1517522066051438,
+    "rolling_sharpe_mean": 0.4203444572627926,
+    "bootstrap_ci": [
+      -0.5225775441563928,
+      1.2072203258419196
+    ],
+    "bootstrap_mean": 0.3353490069145833,
+    "full_sample_sharpe": 0.22475083118945757,
+    "full_sample_return": 0.1961735027116236,
+    "full_sample_annual_return": 0.048662961899126334,
+    "full_sample_maxdd": -0.5118195512949352
+  },
+  "data_info": {
+    "start_date": "2022-02-07",
+    "end_date": "2026-04-10",
+    "total_days": 1013
+  },
+  "data_paths": {
+    "daily_returns": "data/raw/TRD-daily.csv",
+    "sentiment_index": "data/processed/daily_sentiment_index.csv"
+  }
+}
